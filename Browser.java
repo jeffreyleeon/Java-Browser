@@ -1,10 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
 import javax.swing.*;
+import java.lang.Exception;
 
 public class Browser {
   private JFrame frame;
-  private JPanel panel;
+  private JPanel upperPanel;
+  private JPanel lowerPanel;
   private Container content;
 
   public Browser() {
@@ -17,19 +19,34 @@ public class Browser {
     frame.setLayout(new BorderLayout());
 
     // Set upper panel, those buttons
-    frame.add(upperPanel());
+    frame.add(upperPanel(), BorderLayout.NORTH);
 
     // Set lower panel, the web view
-    
+    frame.add(lowerPanel());
     frame.setVisible(true);
   }
 
   private JPanel upperPanel() {
-    panel = new JPanel();
+    upperPanel = new JPanel();
+    upperPanel.setLayout(new BorderLayout());
+
     JButton button = new JButton("TEST");
-    panel.setLayout(new BorderLayout());
-    panel.add(BorderLayout.CENTER, button);
-    return panel;
+    upperPanel.add(BorderLayout.CENTER, button);
+    return upperPanel;
+  }
+
+  private JPanel lowerPanel() {
+    lowerPanel = new JPanel();
+    lowerPanel.setLayout(new BorderLayout());
+
+    JEditorPane editor = null;
+    try {
+      editor = new JEditorPane("http://google.com.hk");
+      lowerPanel.add(BorderLayout.CENTER, editor);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return lowerPanel;
   }
 
   public static void main(String[] args) {
